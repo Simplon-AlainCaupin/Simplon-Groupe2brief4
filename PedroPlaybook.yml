@@ -1,1 +1,18 @@
+- name: Create virtual network
+  azure.azcollection.azure_rm_virtualnetwork:
+    resource_group: PedroTesting
+    name: virtualPedroNetwork
+    address_prefixes: "10.10.0.0/16"
 
+- name: Add subnet
+  azure.azcollection.azure_rm_subnet:
+    resource_group: PedroTesting
+    name: subnet001
+    address_prefix: "10.10.0.0/24"
+    virtual_network: virtualPedroNetwork
+
+- name: Create public ip
+  azure.azcollection.azure_rm_publicipaddress:
+    resource_group: PedroTesting
+    allocation_method: Static
+    name: pedroIp
