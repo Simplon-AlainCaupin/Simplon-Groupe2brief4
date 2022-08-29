@@ -1,0 +1,5 @@
+- name: Delete public ip
+  azure_rm_publicipaddress:
+    resource_group: PedroTactile
+    name: pedroIp
+    state: absent
