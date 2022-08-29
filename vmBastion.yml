@@ -1,0 +1,35 @@
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+      resource_group: PedroTactile
+      name: PedroBastionNSG
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 101
+          direction: Inbound
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: PedroTactile
+      name: PedroBastionNIC
+      virtual_network: virtualPedroNetwork
+      subnet: subnetBastion
+      public_ip_name: pedroIp
+      security_group: PedroBastionNSG
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: PedroTactile
+      name: PedroBastion
+      vm_size: Standard_B1_ls
+      admin_username: pedro
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/pedro/.ssh/authorized_keys
+          key_data: "<key_data>"
+      network_interfaces: PedroBastionNIC
+      image:
+        offer: debian-10
+        publisher: Debian
+        sku: '10'
+        version: latest
