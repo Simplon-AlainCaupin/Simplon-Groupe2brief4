@@ -24,7 +24,7 @@
     azure.azcollection.azure_rm_subnet:
       resource_group: PedroTactile
       name: subnetAppli
-      address_prefix: "10.10.0.0/29"
+      address_prefix: "10.10.1.0/29"
       virtual_network: virtualPedroNetwork
 
   - name: Create public ip
