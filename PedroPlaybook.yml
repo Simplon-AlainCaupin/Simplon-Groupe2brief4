@@ -31,8 +31,9 @@
     azure.azcollection.azure_rm_publicipaddress:
       resource_group: PedroTactile
       allocation_method: Static
-      name: pedroIp
-    register: output_ip_address     
+      name: pedroIpBastion
+    register: output_ip_address_bastion     
   - name: Public IP of VM
     debug:
-      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+      msg: "The public IP is {{ output_ip_address_bastion.state.ip_address }}."
+
