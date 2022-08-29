@@ -5,7 +5,7 @@
   - name: Create resource group
     azure_rm_resourcegroup:
       name: PedroTactile
-      location: ukwest
+      location: francecentral
 
   - name: Create virtual network
     azure.azcollection.azure_rm_virtualnetwork:
