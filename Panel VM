@@ -3,40 +3,41 @@
   connection: local
   tasks:
 
-- name: Create NIC
-  azure.azcollection.azure_rm_networkinterface:
-    resource_group: PedroTactile
-    name: NIC_Olas_Cage
-    virtual_network: virtualPedroNetwork
-    subnet: DavidSubastion
-    public_ip_name: Public IP of VM
-    security_group: PedroNsgPanel
+  - name: Create NIC
+    azure.azcollection.azure_rm_networkinterface:
+      resource_group: PedroTactile
+      name: NIC_Olas_Cage
+      virtual_network: virtualPedroNetwork
+      subnet: subnetAppli
+      public_ip_name: pedroIpAppli
+      security_group: PedroNsgPanel
 
   - name: Create Network Security Group that allows SSH
     azure_rm_securitygroup:
       resource_group: PedroTactile
       name: PedroNsgPanel
       rules:
-        - name: SSH
-          protocol: Tcp
-          destination_port_range: 22
-          access: Allow
-          priority: 1001
-          direction: Inbound
+      - name: SSH
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound
 
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: PedroTactile
-      name: VMP
-      vm_size: Standard_B1LS
-      admin_username: admin
+      name: Virtual:MP
+      vm_size: Standard_B1ls
+      admin_username: pedro
       ssh_password_enabled: false
       ssh_public_keys:
-        - path: /home/azureuser/.ssh/authorized_keys
-          key_data: "<key_data>"
+      - path: /home/pedro/.ssh/authorized_keys
+        key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDL+vBbX57TsYfDb3fLJxCK1cnESAMyg82aD53QDaobhsOgoek+MmKQiMEllWJOVkD39pKrM1nEV8MIigtEcTr5p/B7wd08r25tPD/J4XfrnWNPW7o9ND6r2zoqx1HPvFLU8eoTOW1Zxf5CHJ9d9/Mq1RmGS0MmK/fNgu0aeybhxwpo3VJI9quH1pmGkiMSvXOfRJoTIqkuAlo3eKKxKOzpYaVsn7GHaLtvl8sZJslDZwLsIYcrpQwTvRNZuaJRsUNpEy3Sv2NKhUPJZFm6O1TPjGBtyn9UnVR3BRug/F+lVH+ae/t4G2YHTYdWfLc4Bvip4SwxKQeo31WNQYLJ62lpLuGElh1S4kg6CHRhZVEYBrOpu6u3mLom37SIDuXfW3uzqlOt3m4WXgCHbaMf/2N8MJ366UUMIvNtsYR3TepHuuIK9zyfCJgrYOrXdd5yVBmHI/2q+4qbukfot6qhzgM9fLJBh3JvjgGOVOVdWOxGwYYhkKlQqZ+Ezx2p50OGgP8= utilisateur@UTILISA-KAO31C7"
       network_interfaces: NIC_Olas_Cage
       image:
-        offer: Debian-10
+        offer: debian-10
         publisher: Debian
         sku: '10'
         version: latest
+
