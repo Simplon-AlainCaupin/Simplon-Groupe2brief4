@@ -1,38 +1,37 @@
 - name: Create Azure VM for pterodactyl Wings
-hosts: localhost
-connection: local
-tasks:
+  hosts: localhost
+  connection: local
+  tasks:
   - name: Create MySQL Server
-      azure_rm_mysqlserver:
-        resource_group: "PedroTactile"
-        name: "MyPedroSQLServ"
-        sku:
-          name: B_Gen5_1
-          tier: Basic
-        location: "ukwest"
-        version: 5.6
-        enforce_ssl: True
-        admin_username: "{{ admin_username }}"
-        admin_password: "{{ admin_password }}"
-        storage_mb: 51200
+    azure_rm_mysqlserver:
+      resource_group: PedroTactile
+      name: MyPedroSQLServ
+      sku:
+        name: B_Gen5_1
+        tier: Basic
+      location: francecentral
+      version: 8.0
+      enforce_ssl: True
+      admin_username: pedro
+      admin_password: MotDeP3dro!
   - name: Create instance of MySQL Database
-      azure_rm_mysqldatabase:
-        resource_group: "PedroTactile"
-        server_name: "MyPedroSQLServ"
-        name: "MyPedroSQLDDB"
+    azure_rm_mysqldatabase:
+      resource_group: PedroTactile
+      server_name: MyPedroSQLServ
+      name: MyPedroSQLDDB
 
   - name: Create Azure Cache for Redis
     azure_rm_rediscache:
-      resource_group: "PedroTactile"
-      name: "pedroCache"
+      resource_group: PedroTactile
+      name: pedroCache
       sku:
         name: basic
         size: C1
 
   - name: Wait for Redis provisioning to complete
     azure_rm_rediscache_info:
-      resource_group: "PedroTactile"
-      name: "pedroCache"
+      resource_group: PedroTactile
+      name: pedroCache
     register: facts
     until: "{{ facts.rediscaches[0]['provisioning_state'] == 'Succeeded' }}"
     retries: 100

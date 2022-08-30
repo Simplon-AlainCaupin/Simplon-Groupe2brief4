@@ -12,31 +12,31 @@
     public_ip_name: Public IP of VM
     security_group: PedroNsgPanel
 
-  - name: Create Network Security Group that allows SSH
-    azure_rm_securitygroup:
-      resource_group: PedroTactile
-      name: PedroNsgPanel
-      rules:
-        - name: SSH
-          protocol: Tcp
-          destination_port_range: 22
-          access: Allow
-          priority: 1001
-          direction: Inbound
+- name: Create Network Security Group that allows SSH
+  azure_rm_securitygroup:
+    resource_group: PedroTactile
+    name: PedroNsgPanel
+    rules:
+    - name: SSH
+      protocol: Tcp
+      destination_port_range: 22
+      access: Allow
+      priority: 1001
+      direction: Inbound
 
-  - name: Create VM
-    azure_rm_virtualmachine:
-      resource_group: PedroTactile
-      name: VMP
-      vm_size: Standard_B1LS
-      admin_username: admin
-      ssh_password_enabled: false
-      ssh_public_keys:
-        - path: /home/azureuser/.ssh/authorized_keys
-          key_data: "<key_data>"
-      network_interfaces: NIC_Olas_Cage
-      image:
-        offer: Debian-10
-        publisher: Debian
-        sku: '10'
-        version: latest
+- name: Create VM
+  azure_rm_virtualmachine:
+    resource_group: PedroTactile
+    name: VMP
+    vm_size: Standard_B1LS
+    admin_username: admin
+    ssh_password_enabled: false
+    ssh_public_keys:
+      - path: /home/azureuser/.ssh/authorized_keys
+        key_data: "<key_data>"
+    network_interfaces: NIC_Olas_Cage
+    image:
+      offer: Debian-10
+      publisher: Debian
+      sku: '10'
+      version: latest
