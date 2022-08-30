@@ -16,14 +16,14 @@
   - name: Add subnet
     azure.azcollection.azure_rm_subnet:
       resource_group: PedroTactile
-      name: subnetBastion
+      name: subnetPedro
       address_prefix: "10.10.0.0/29"
       virtual_network: virtualPedroNetwork
 
   - name: Add subnet
     azure.azcollection.azure_rm_subnet:
       resource_group: PedroTactile
-      name: subnetAppli
+      name: subnetGateway
       address_prefix: "10.10.1.0/29"
       virtual_network: virtualPedroNetwork
 
