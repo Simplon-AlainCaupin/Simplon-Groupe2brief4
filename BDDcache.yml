@@ -10,11 +10,10 @@
         name: B_Gen5_1
         tier: Basic
       location: francecentral
-      version: 5.6
+      version: 8.0
       enforce_ssl: True
       admin_username: pedro
-      admin_password: pedro_mdp
-      storage_mb: 51200
+      admin_password: MotDeP3dro!
   - name: Create instance of MySQL Database
     azure_rm_mysqldatabase:
       resource_group: PedroTactile
