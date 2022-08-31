@@ -1,0 +1,24 @@
+- name: Create Azure loadbalancer
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: create load balancer
+      azure_rm_loadbalancer:
+        resource_group: PedroTactile
+        name: balanceTonPedro
+        frontend_ip_configurations:
+          - name: frontIPman
+            public_ip_address: testpip
+        backend_address_pools:
+          - name: poulardeExpress
+        inbound_nat_rules:
+          - name: natcraft
+            backend_port: 25565
+            protocol: Tcp
+            frontend_port: 25565
+            frontend_ip_configuration: frontIPman
+          - name: natmap
+            backend_port: 8080
+            protocol: Tcp
+            frontend_port: 8080
+            frontend_ip_configuration: frontIPman
