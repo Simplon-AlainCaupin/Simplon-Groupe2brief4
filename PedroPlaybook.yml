@@ -41,7 +41,17 @@
     azure.azcollection.azure_rm_publicipaddress:
       resource_group: PedroTactile
       allocation_method: Static
-      name: pedroIpAppli
+      name: pedroIpWings
+    register: output_ip_address_Appli   
+  - name: Public IP of VM
+    debug:
+      msg: "The public IP for the appli is {{ output_ip_address_Appli.state.ip_address }}."
+
+  - name: Create public ip
+    azure.azcollection.azure_rm_publicipaddress:
+      resource_group: PedroTactile
+      allocation_method: Static
+      name: pedroIpPannel
     register: output_ip_address_Appli   
   - name: Public IP of VM
     debug:

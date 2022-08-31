@@ -20,6 +20,11 @@
       virtual_network: virtualPedroNetwork
       subnet: subnetAppli
       security_group: PedroWingsNSG
+      ip_configurations:
+        - name: ipconfig2
+          load_balancer_backend_address_pools:
+            - name: poulardeExpress
+              load_balancer: balanceTonPedro
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: PedroTactile
