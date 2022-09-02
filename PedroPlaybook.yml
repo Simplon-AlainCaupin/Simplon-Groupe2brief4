@@ -32,6 +32,7 @@
       resource_group: PedroTactile
       allocation_method: Static
       name: pedroIpBastion
+      domain_name: pedrobastion
     register: output_ip_address_bastion    
   - name: Public IP of VM
     debug:
@@ -42,6 +43,7 @@
       resource_group: PedroTactile
       allocation_method: Static
       name: pedroIpWings
+      domain_name: pedrowings
     register: output_ip_address_Appli   
   - name: Public IP of VM
     debug:
@@ -52,6 +54,7 @@
       resource_group: PedroTactile
       allocation_method: Static
       name: pedroIpPannel
+      domain_name: pedropanel
     register: output_ip_address_Appli   
   - name: Public IP of VM
     debug:
