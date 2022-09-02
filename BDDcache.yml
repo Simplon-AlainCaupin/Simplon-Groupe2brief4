@@ -12,13 +12,22 @@
       location: francecentral
       version: 8.0
       enforce_ssl: True
-      admin_username: pedro
+      admin_username: pterodactyl
       admin_password: MotDeP3dro!
   - name: Create instance of MySQL Database
+    
     azure_rm_mysqldatabase:
       resource_group: PedroTactile
       server_name: MyPedroSQLServ
-      name: MyPedroSQLDDB
+      name: pterodactyl
+  
+  - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in pterodactyl
+    community.mysql.mysql_user:
+      state: present
+      name: pterodactyluser
+      password: MotDeP3dro!
+      priv:
+        'pterodactyl.*': 'ALL,GRANT'
 
   - name: Create Azure Cache for Redis
     azure_rm_rediscache:
