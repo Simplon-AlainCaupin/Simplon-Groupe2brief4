@@ -8,6 +8,7 @@
       name: PedroStorage
       type: Premium_LRS
       kind: storage
+  
   - name: Create storage share
     azure_rm_storageshare:
       name: pedroShare
