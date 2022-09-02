@@ -23,6 +23,10 @@
   
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in pterodactyl
     community.mysql.mysql_user:
+      login_user: pterodactyl@mypedrosqlserv
+      login_password: MotDeP3dro!
+      host: mypedrosqlserv
+      login_host: mypedrosqlserv.mysql.database.azure.com
       state: present
       name: pterodactyluser
       password: MotDeP3dro!
