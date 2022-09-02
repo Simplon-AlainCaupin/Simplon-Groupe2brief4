@@ -41,20 +41,3 @@
       password: MotDeP3dro!
       priv:
         'pterodactyl.*': 'ALL,GRANT'
-
-  - name: Create Azure Cache for Redis
-    azure_rm_rediscache:
-      resource_group: PedroTactile
-      name: pedroCache
-      sku:
-        name: basic
-        size: C1
-
-  - name: Wait for Redis provisioning to complete
-    azure_rm_rediscache_info:
-      resource_group: PedroTactile
-      name: pedroCache
-    register: facts
-    until: "{{ facts.rediscaches[0]['provisioning_state'] == 'Succeeded' }}"
-    retries: 100
-    delay: 60
