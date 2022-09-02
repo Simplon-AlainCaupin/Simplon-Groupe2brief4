@@ -1,5 +1,9 @@
-- name: Delete public ip
-  azure_rm_publicipaddress:
-    resource_group: PedroTactile
-    name: pedroIp
-    state: absent
+- name: Suppression de resource group
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Suppression RG
+    azure_rm_resourcegroup:
+      name: PedroTactileTest
+      force_delete_nonempty: yes
+      state: absent
