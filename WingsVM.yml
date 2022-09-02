@@ -7,20 +7,24 @@
       resource_group: PedroTactile
       name: PedroWingsNSG
       rules:
-        - name: SSH
-          protocol: Tcp
-          destination_port_range: 22
-          access: Allow
-          priority: 1001
-          direction: Inbound
+      - name: SSH
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound
   - name: Create virtual network interface card
     azure_rm_networkinterface:
       resource_group: PedroTactile
-      name: NICe_Marseille
+      name: NICole_kidmann
       virtual_network: virtualPedroNetwork
-      subnet: subnetAppli
-      public_ip_name: pedroIpAppli
+      subnet: subnetPedro
       security_group: PedroWingsNSG
+      ip_configurations:
+        - name: ipconfig2
+          load_balancer_backend_address_pools:
+            - name: poulardeExpress
+              load_balancer: balanceTonPedro
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: PedroTactile
@@ -29,9 +33,9 @@
       admin_username: pedro
       ssh_password_enabled: false
       ssh_public_keys:
-        - path: /home/azureuser/.ssh/authorized_keys
-          key_data: "<key_data>"
-      network_interfaces: NICe_Marseille
+      - path: /home/pedro/.ssh/authorized_keys
+        key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpS16kB+yoDsbFdT93X5mfmrd+RYcJ/s8e/r/F8Q0i5mrCruIHPxFfy/Grekq1UZ8OyIRjW1tPg5KD1OC9ahJXWY+jaUCacBsM4c/RfPc4a2mn5oXoAF2YNOra9/3Us1y/Cx0Vq2Ie0Xjs07FqaXvticlroBCZ9c8PRmMBSNmsgTwm+Sbazs9KaPbg/M1XlgscqlG3SX6m9uI5s2FzpeK55jTfmECRWOIwlYmeRrz2h/9h2eKzjaQDxH3zjyoHiTJ2hgCN7ZQhc8DoQ4DBdKt01X6pL/HMnRlg8ojsQPkUxUENu858u25hx/pEFi3AqTDeGBA4Zxup0fVQetkkwSxV"
+      network_interfaces: NICole_kidmann
       image:
         offer: debian-10
         publisher: Debian
