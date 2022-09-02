@@ -7,3 +7,10 @@
   ansible.builtin.import_playbook: PedroInfra.yml
 - name: Playbook VM bastion
   ansible.builtin.import_playbook: PedroBastion.yml
+#- name: Déploiement Wings
+#ansible.builtin.import_playbook: WingsVM.yml
+#- name: Déploiement BDD Azure MySQL
+#ansible.builtin.import_playbook: BDDcache.yml
+#- name: Déploiement load balancer
+
+#- name: Déploiement storage account
