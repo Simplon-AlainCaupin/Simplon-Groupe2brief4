@@ -1,0 +1,18 @@
+- name: Create storage account
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create an account with kind of FileStorage
+    azure_rm_storageaccount:
+      resource_group: PedroTactile
+      name: PedroStorage
+      type: Premium_LRS
+      kind: storage
+  - name: Create storage share
+    azure_rm_storageshare:
+      name: pedroShare
+      resource_group: PedroTactile
+      account_name: PedroStorage
+      state: present
+      quota: 5120
+    
