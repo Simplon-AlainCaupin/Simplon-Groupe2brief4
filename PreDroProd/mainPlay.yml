@@ -1,0 +1,9 @@
+- hosts: localhost
+  tasks:
+    - ansible.builtin.debug:
+        msg: play1
+
+- name: Playbook infra PedroTactileⒸ
+  ansible.builtin.import_playbook: PedroInfra.yml
+- name: Playbook VM bastion
+  ansible.builtin.import_playbook: PedroBastion.yml
