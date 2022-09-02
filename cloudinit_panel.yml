@@ -1,0 +1,147 @@
+#cloud-config
+
+package_update: true
+packages:
+  - wget
+  - git
+  - php8.1
+  - php8.1-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip,openssl,tokenizer}
+  - nginx
+  - tar
+  - unzip
+  - curl
+  - composer
+
+package_upgrade: true
+package_reboot_if_required: true
+
+users:
+  - default
+  - name: gabriel
+    groups: sudo, root
+    shell: /bin/bash
+    plain_text_passwd: bla123!
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys: 
+        - >-
+          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXyIriiv0HbFfF2yfSdjfQjXfJDyPZX3WzpI/AEdGVHWXJTMoYurHvzlHOr8YA3XBwlTw20bce444HkFD+1RV38RmIHVgpaAs0+KY5ralkl3lmtxm9mfYu6ttiDC8ExDqkoo0JB4U/GH7okJR5D0oJWDWqgkY8JOQlNvpiurncCPLMtVAfSBD/vieQZiiRBLMayA5z8pawdLvIcs56h11IMRxmaKIwAP1mRTcMi4glmZ42FBQzxS41xCZOy1NodmMxV9cx8wqTA63I1/MAoF2w8dwh7bAFUPiYjjwjv5mWFA++iugJMGUqR3vku+hz4Lh6LxMZAx6bqkB0Gw542hcMArezkKPPJlcKzJFoggt8Qh6iATnqO9Yvx3wXrq3aAobg8wlO0f36xh/FqnBQkG70w7/dw9sCPrm03P7cmwhhEPUI0V6HG0rPkJjhTIAgOW/h5DAxgWF0rBbHkg0OzDt2UYqoDQc4PKHf/xRGZNfbpUlKZLRzNDihQe5vKshPXY8= gabriel@gabriel-ThinkPad-T470s
+
+# device_aliases:
+#   datadisk: /dev/disk/azure/scsi1/lun0
+
+# disk_setup:
+#   datadisk:
+#     table_type: gpt
+#     layout: [100]
+#     overwrite: true
+
+# fs_setup:
+# - label: fs1
+#   filesystem: ext4
+#   device: datadisk
+#   cmd: mkfs -t %(filesystem)s -L %(label)s %(device)s
+# mounts:
+# - ["datadisk", "/var/lib/gitea"]
+
+bootcmd:
+    - mkdir -p /var/www/pterodactyl
+    - cd /var/www/pterodactyl
+
+write_files:
+  - path: /etc/systemd/system/gitea.service
+    content: |
+          [Unit]
+          Description=Gitea (Git with a cup of tea)
+          After=syslog.target
+          After=network.target
+          [Service]
+          RestartSec=2s
+          Type=simple
+          User=git
+          Group=git
+          WorkingDirectory=/var/lib/gitea/
+          ExecStart=/usr/local/bin/gitea web --config /etc/gitea/app.ini
+          Restart=always
+          Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea
+          #CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+          #AmbientCapabilities=CAP_NET_BIND_SERVICE
+          [Install]
+          WantedBy=multi-user.target
+  - path: /etc/gitea/app.ini
+    content: |
+          APP_NAME = Gitea: Git with a cup of tea
+          RUN_USER = git
+          RUN_MODE = prod
+
+          [database]
+          DB_TYPE  = mysql
+          HOST     = giteasqlsrv.mysql.database.azure.com:3306
+          NAME     = gitea
+          USER     = Gitea@giteasqlsrv
+          PASSWD   = @@MOTDEPASSE@@
+          SCHEMA   =
+          SSL_MODE = true
+          CHARSET  = utf8mb4
+          PATH     = /var/lib/gitea/data/gitea.db
+          LOG_SQL  = false
+
+          [repository]
+          ROOT = /var/lib/gitea/data/gitea-repositories
+
+          [server]
+          SSH_DOMAIN       = giteafirst.francecentral.cloudapp.azure.com
+          DOMAIN           = giteafirst.francecentral.cloudapp.azure.com
+          HTTP_PORT        = 3000
+          ROOT_URL         = http://giteafirst.francecentral.cloudapp.azure.com:3000/
+          DISABLE_SSH      = false
+          SSH_PORT         = 22
+          LFS_START_SERVER = true
+          LFS_CONTENT_PATH = /var/lib/gitea/data/lfs
+          LFS_JWT_SECRET   = 8bmPpTceZpFO2FL1elFkb4wJPyMnvibmjn-3S8iqtdA
+          OFFLINE_MODE     = false
+
+          [mailer]
+          ENABLED = false
+
+          [service]
+          REGISTER_EMAIL_CONFIRM            = false
+          ENABLE_NOTIFY_MAIL                = false
+          DISABLE_REGISTRATION              = false
+          ALLOW_ONLY_EXTERNAL_REGISTRATION  = false
+          ENABLE_CAPTCHA                    = false
+          REQUIRE_SIGNIN_VIEW               = false
+          DEFAULT_KEEP_EMAIL_PRIVATE        = false
+          DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+          DEFAULT_ENABLE_TIMETRACKING       = true
+          NO_REPLY_ADDRESS                  = noreply.localhost
+
+          [picture]
+          DISABLE_GRAVATAR        = false
+          ENABLE_FEDERATED_AVATAR = true
+
+          [openid]
+          ENABLE_OPENID_SIGNIN = true
+          ENABLE_OPENID_SIGNUP = true
+
+          [session]
+          PROVIDER = file
+
+          [log]
+          MODE      = console
+          LEVEL     = info
+          ROOT_PATH = /var/lib/gitea/log
+          ROUTER    = console
+
+          [security]
+          INSTALL_LOCK       = true
+          INTERNAL_TOKEN     = eyJhbGciOiJIUzI2NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2NTkzNDM2NDd9.GXySbig9Bs86F-m9o-VI2SD9G-pcvmhBviSVIwVb0Zg
+          PASSWORD_HASH_ALGO = pbkdf2
+
+runcmd:
+    - cp .env.example .env
+    - composer install --no-dev --optimize-autoloader
+    - php artisan key:generate --force
+    - php artisan p:environment:setup
+    - php artisan p:environment:database
+    - php artisan migrate --seed --force
+    - chown -R www-data:www-data /var/www/pterodactyl/*
