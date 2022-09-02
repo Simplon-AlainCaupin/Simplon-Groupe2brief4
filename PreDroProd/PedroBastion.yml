@@ -1,26 +1,8 @@
-- name: Create Azure VM
+- name: Création VM Bastion
   hosts: localhost
   connection: local
   tasks:
-  - name: Create Network Security Group that allows SSH
-    azure_rm_securitygroup:
-      resource_group: PedroTactile
-      name: PedroBastionNSG
-      rules:
-      - name: SSH
-        protocol: Tcp
-        destination_port_range: 22
-        access: Allow
-        priority: 101
-        direction: Inbound
-  - name: Create virtual network interface card
-    azure_rm_networkinterface:
-      resource_group: PedroTactile
-      name: PedroBastionNIC
-      virtual_network: virtualPedroNetwork
-      subnet: subnetPedro
-      public_ip_name: pedroIpBastion
-      security_group: PedroBastionNSG
+
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: PedroTactile
@@ -37,6 +19,7 @@
         publisher: Debian
         sku: '10'
         version: latest
+  
   - name: Get network interface details
     azure_rm_networkinterface_facts:
       resource_group: PedroTactile
@@ -54,4 +37,4 @@
     set_fact:
       vm_internal_ip: "{{ networkinterface_output.networkinterfaces[0].ip_configurations[0].private_ip_address}}"
   - name: show private IP
-    debug: msg="{{ vm_internal_ip }}"
+    debug: msg="{{ vm_internal_ip }}"<
