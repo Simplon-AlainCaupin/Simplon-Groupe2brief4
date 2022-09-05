@@ -2,13 +2,17 @@
   hosts: localhost
   connection: local
   tasks:
+    - name: récup IP publique lb
+      ansible.builtin.import_playbook:
+        
+
     - name: create load balancer
       azure_rm_loadbalancer:
         resource_group: PedroTactile
         name: balanceTonPedro
         frontend_ip_configurations:
           - name: frontIPman
-            public_ip_address: testpip
+            public_ip_address: IPdroLB
         backend_address_pools:
           - name: poulardeExpress
         inbound_nat_rules:
