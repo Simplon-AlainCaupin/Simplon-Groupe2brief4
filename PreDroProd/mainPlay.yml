@@ -5,12 +5,12 @@
 
 - name: Playbook infra PedroTactileⒸ
   ansible.builtin.import_playbook: PedroInfra.yml
+- name: Déploiement BDD Azure MySQL
+  ansible.builtin.import_playbook: BDDCache.yml
+#- name: Déploiement storage account
 - name: Playbook VM bastion
   ansible.builtin.import_playbook: PedroBastion.yml
+#- name: Déploiement Conteneur Panel
 #- name: Déploiement Wings
 #ansible.builtin.import_playbook: WingsVM.yml
-#- name: Déploiement BDD Azure MySQL
-#ansible.builtin.import_playbook: BDDcache.yml
 #- name: Déploiement load balancer
-
-#- name: Déploiement storage account
