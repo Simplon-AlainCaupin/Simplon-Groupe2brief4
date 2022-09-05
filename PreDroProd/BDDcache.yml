@@ -23,6 +23,7 @@
 
   - name: Create (or update) MySQL firewall rule
     azure_rm_mysqlfirewallrule:
+
       resource_group: PedroTactile
       server_name: MyPedroSQLServ
       name: ip_simplon
