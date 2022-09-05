@@ -2,7 +2,7 @@
   hosts: localhost
   connection: local
   tasks:
-  - name: Create sample container group with git repo volume
+  - name: Create sample container group
     azure_rm_containerinstance:
       resource_group: PedroTactile
       name: PedroPanel
@@ -10,7 +10,7 @@
       ip_address: public
       dns_name_label: PedroPanel
       containers:
-        - name: PedroContainer
+        - name: pedrocontainer
           image: aeonlucid/pterodactyl-panel
           cpu: 1
           memory: 1
@@ -21,15 +21,15 @@
               value: PGID=1000
             - name: creat_admin
               value: CREATE_ADMIN=yes
-          volume_mounts:
-            - name: pedroData
-              mount_path: "/data"
+      #     volume_mounts:
+      #       - name: pedrodata
+      #         mount_path: "/data"
           ports:
             - 8080
-      volumes:
-        - name: filesharevolume
-          azure_file:
-            storage_account_name: mystorageaccount
-            share_name: acishare
-            storage_account_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      # volumes:
+      #   - name: filesharevolume
+      #     azure_file:
+      #       storage_account_name: mystorageaccount
+      #       share_name: acishare
+      #       storage_account_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 

@@ -19,6 +19,7 @@
         publisher: Debian
         sku: '10'
         version: latest
+      custom_data: "{{ lookup('file', '/home/alain/Documents/gitcloneb4/Simplon-Groupe2brief4/PreDroProd/initBastion') }}"
   
   - name: Get network interface details
     azure_rm_networkinterface_facts:
