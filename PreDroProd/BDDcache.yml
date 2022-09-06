@@ -1,11 +1,21 @@
-- name: Create Azure VM for pterodactyl Wings
+- name: Create Azure Mysql BDD
   hosts: localhost
   connection: local
   tasks:
+  - name: Get specific Container Instance facts
+    azure_rm_containerinstance_info:
+      resource_group: PedroTactile
+      name: PedroPanel
+    register: pedropanel
   - name: Create MySQL Server
     azure_rm_mysqlserver:
       resource_group: PedroTactile
       name: MyPedroSQLServ
+      storage_profile:
+        storage_mb: 51200
+        backup_retention_days: 14
+        geo_redundant_backup: Disabled
+        storage_autogrow: Disabled
       sku:
         name: B_Gen5_1
         tier: Basic
@@ -23,12 +33,19 @@
 
   - name: Create (or update) MySQL firewall rule
     azure_rm_mysqlfirewallrule:
-
       resource_group: PedroTactile
       server_name: MyPedroSQLServ
       name: ip_simplon
       start_ip_address: 212.51.190.22
       end_ip_address: 212.51.190.22
+
+  - name: Create (or update) MySQL firewall rule
+    azure_rm_mysqlfirewallrule:
+      resource_group: PedroTactile
+      server_name: MyPedroSQLServ
+      name: ip_panel
+      start_ip_address: {{pedropanel.container_groups[0].ip_address}}
+      end_ip_address: {{pedropanel.container_groups[0].ip_address}}
   
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in pterodactyl
     community.mysql.mysql_user:

@@ -2,6 +2,12 @@
   hosts: localhost
   connection: local
   tasks:
+
+  - name: Get facts for all accounts in a resource group
+    azure_rm_storageaccount_info:
+      resource_group: myResourceGroup
+      name: PedroStorage
+    register: Pedrostorage
   - name: Create sample container group
     azure_rm_containerinstance:
       resource_group: PedroTactile
@@ -9,8 +15,9 @@
       os_type: linux
       ip_address: public
       dns_name_label: PedroPanel
+      restart_policy: always
       containers:
-        - name: pedrocontainer
+        - name: Pedrocontainer
           image: aeonlucid/pterodactyl-panel
           cpu: 1
           memory: 1
@@ -21,15 +28,14 @@
               value: PGID=1000
             - name: creat_admin
               value: CREATE_ADMIN=yes
-      #     volume_mounts:
-      #       - name: pedrodata
-      #         mount_path: "/data"
+          volume_mounts:
+            - name: pedroData
+              mount_path: "/data"
           ports:
             - 8080
-      # volumes:
-      #   - name: filesharevolume
-      #     azure_file:
-      #       storage_account_name: mystorageaccount
-      #       share_name: acishare
-      #       storage_account_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+      volumes:
+        - name: pedrovolume
+          azure_file:
+            storage_account_name: PedroStorage
+            share_name: pedroShare
+            storage_account_key: {{Pedrostorage.storageaccounts[0].primary_endpoints[0].key}}
