@@ -1,4 +1,4 @@
-- name: Create Azure VM for pterodactyl Wings
+- name: Create Azure Mysql BDD
   hosts: localhost
   connection: local
   tasks:
@@ -6,6 +6,11 @@
     azure_rm_mysqlserver:
       resource_group: PedroTactile
       name: MyPedroSQLServ
+      storage_profile:
+        storage_mb: 51200
+        backup_retention_days: 14
+        geo_redundant_backup: Disabled
+        storage_autogrow: Disabled
       sku:
         name: B_Gen5_1
         tier: Basic
