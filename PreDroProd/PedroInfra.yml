@@ -26,9 +26,21 @@
       allocation_method: Static
       name: IPdroBastion
     register: output_ip_address_bastion    
-  - name: Public IP of VM
+  - name: récupération ip bastion
     debug:
       msg: "L'ip publique bastion est : {{ output_ip_address_bastion.state.ip_address }}."
+  
+  - name: Création ip publique loadbalancer
+    azure.azcollection.azure_rm_publicipaddress:
+      resource_group: PedroTactile
+      allocation_method: Static
+      name: IPdroLB
+    register: output_ip_address_lb
+  - name: récupération ip lb
+    debug:
+      msg: "L'ip publique du lb est : {{ output_ip_address_lb.state.ip_address }}"
+
+  # - name: Création ip publique conteneur
 
   - name: Création nsg autorisant ssh
     azure_rm_securitygroup:

@@ -1,0 +1,19 @@
+#cloud-config
+
+groups:
+
+  - admingroup: [root,sys]
+  - cloud-users
+
+users:
+
+  - default
+
+  - name: pedroAdmin
+    gecos: Pedro
+    primary_group: pedro
+    groups: sudo, users, admin, admingroup
+    shell: /bin/bash
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbT2BfdtRDusIaZnoEtZu+6pFWMej18sX/QnYNmGqlUYPKpHsFI5ynItoUgoJcW6kNikUWJ1tJWy5zj3BMszYLBWWVA8VeTJc6Yaj94X1R9Laabzjh45vfdvJgqgnk6lQeXhhyoGZImCKnBLZp7/WIkidJ+Cn4FX++a30WmgdA1wMYLAtLWPkQFlZdmF5EfbfMbSl12ot2fZdmHsF+m4ot1d27VyZqr4N7lcL5GGUOmJuofeL0hqZnf4pbtcHyzusnxO+XYJHBsy5SHC7DvRO7TvUzE/5mBFUAi3KUgClRObYKPrY+n2TOtjufYzWBxrKYF9+04WDDuHbH/J630EK9 alain@alain-VirtualBoxalain@alain

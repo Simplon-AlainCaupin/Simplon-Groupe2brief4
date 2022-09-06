@@ -4,6 +4,6 @@
   tasks:
   - name: Suppression RG
     azure_rm_resourcegroup:
-      name: PedroTactileTest
+      name: PedroTactile
       force_delete_nonempty: yes
       state: absent
