@@ -2,6 +2,11 @@
   hosts: localhost
   connection: local
   tasks:
+  - name: Get facts for all accounts in a resource group
+    azure_rm_storageaccount_info:
+      resource_group: myResourceGroup
+      name: PedroStorage
+    register: Pedrostorage
   - name: Create sample container group with git repo volume
     azure_rm_containerinstance:
       resource_group: PedroTactile
@@ -28,9 +33,9 @@
           ports:
             - 8080
       volumes:
-        - name: filesharevolume
+        - name: pedrovolume
           azure_file:
-            storage_account_name: mystorageaccount
-            share_name: acishare
-            storage_account_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            storage_account_name: PedroStorage
+            share_name: pedroShare
+            storage_account_key: {{Pedrostorage.storageaccounts[0].primary_endpoints[0].key}}
 

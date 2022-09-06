@@ -2,6 +2,11 @@
   hosts: localhost
   connection: local
   tasks:
+  - name: Get specific Container Instance facts
+    azure_rm_containerinstance_info:
+      resource_group: PedroTactile
+      name: PedroPanel
+    register: pedropanel
   - name: Create MySQL Server
     azure_rm_mysqlserver:
       resource_group: PedroTactile
@@ -39,8 +44,8 @@
       resource_group: PedroTactile
       server_name: MyPedroSQLServ
       name: ip_panel
-      start_ip_address: 
-      end_ip_address: 
+      start_ip_address: {{pedropanel.container_groups[0].ip_address}}
+      end_ip_address: {{pedropanel.container_groups[0].ip_address}}
   
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in pterodactyl
     community.mysql.mysql_user:
