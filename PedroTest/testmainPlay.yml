@@ -1,0 +1,14 @@
+- name: Main PedroBook
+  hosts: localhost
+  tasks:
+  # - ansible.builtin.debug:
+  #   msg: Début du playbook
+
+- name: Playbook infra PedroTactileⒸ
+  ansible.builtin.import_playbook: testPedroInfra.yml
+
+- name: Déploiement storage account
+  ansible.builtin.import_playbook: testpedroShare.yml
+
+- name: Playbook VM bastion
+  ansible.builtin.import_playbook: testPedroBastion.yml
