@@ -1,0 +1,25 @@
+- name: Main PedroBook
+  hosts: localhost
+  tasks:
+  # - ansible.builtin.debug:
+  #   msg: Début du playbook
+
+# - name: Playbook infra PedroTactileⒸ
+#   ansible.builtin.import_playbook: PedroInfra.yml
+
+# - name: Déploiement storage account
+#   ansible.builtin.import_playbook: pedroShare.yml
+
+# - name: Playbook VM bastion
+#   ansible.builtin.import_playbook: PedroBastion.yml
+
+# - name: Déploiement Conteneur Panel
+#   ansible.builtin.import_playbook: pedroContainer.yml
+
+- name: Déploiement BDD Azure MySQL
+  ansible.builtin.import_playbook: BDDcache.yml
+
+#- name: Déploiement Wings
+#ansible.builtin.import_playbook: WingsVM.yml
+
+#- name: Déploiement load balancer

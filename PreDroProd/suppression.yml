@@ -1,0 +1,9 @@
+- name: Suppression de resource group
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Suppression RG
+    azure_rm_resourcegroup:
+      name: PedroTactile
+      force_delete_nonempty: yes
+      state: absent
