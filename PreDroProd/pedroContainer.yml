@@ -27,11 +27,11 @@
           memory: 1
           environment_variables:
             - name: PUID
-              value: PUID=1000
+              value: 1000
             - name: PGID
-              value: PGID=1000
-            - name: creat_admin
-              value: CREATE_ADMIN=yes
+              value: 1000
+            - name: CREATE_ADMIN
+              value: yes
           volume_mounts:
             - name: pedrovolume
               mount_path: "/data"
