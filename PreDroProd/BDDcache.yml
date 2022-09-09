@@ -20,8 +20,8 @@
         geo_redundant_backup: Disabled
         storage_autogrow: Disabled
       sku:
-        name: B_Gen5_1
-        tier: Basic
+        name: GP_Gen5_4
+        tier: GeneralPurpose
       location: francecentral
       enforce_ssl: yes
       version: 8.0
@@ -42,13 +42,13 @@
       start_ip_address: 212.51.190.22
       end_ip_address: 212.51.190.22
 
-  - name: Create (or update) MySQL firewall rule
-    azure_rm_mysqlfirewallrule:
-      resource_group: PedroTactile
-      server_name: MyPedroSQLServ
-      name: ip_panel
-      start_ip_address: "{{ PedroPanel.containerinstances[0].ip_address }}"
-      end_ip_address: "{{ PedroPanel.containerinstances[0].ip_address }}"
+  # - name: Create (or update) MySQL firewall rule
+  #   azure_rm_mysqlfirewallrule:
+  #     resource_group: PedroTactile
+  #     server_name: MyPedroSQLServ
+  #     name: ip_panel
+  #     start_ip_address: "{{ PedroPanel.containerinstances[0].ip_address }}"
+  #     end_ip_address: "{{ PedroPanel.containerinstances[0].ip_address }}"
   
   - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in pterodactyl
     community.mysql.mysql_user:

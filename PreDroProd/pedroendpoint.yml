@@ -1,0 +1,49 @@
+- name: Create Azure panel container
+  hosts: localhost
+  connection: local
+  tasks:
+  
+  - name: get mysql server id
+    azure.azcollection.azure_rm_mysqlserver_info:
+      resource_group: PedroTactile
+      name: MyPedroSQLServ
+    register: pedrosql
+  - name: debug info bdd
+    debug:
+      msg: "{{ pedrosql.servers[0].id }}"
+
+  - name: Get facts of specific subnet
+    azure_rm_subnet_info:
+      resource_group: PedroTactile
+      virtual_network_name: virtualPedroNetwork
+      name: subnetPedro
+    register: subnetinfo
+  - name: debug subnet infos
+    debug:
+      msg: "{{ subnetinfo.subnets[0].id }}"
+
+  - name: Create private endpoint
+    azure.azcollection.azure_rm_privateendpoint:
+      name: pedroendpoint
+      resource_group: PedroTactile
+      private_link_service_connections:
+        - group_ids: ["mysqlServer"]
+          name: pedroBDD
+          private_link_service_id: "{{ pedrosql.servers[0].id }}"
+      subnet:
+        id: "{{ subnetinfo.subnets[0].id }}"
+    
+  - name: Create a private DNS zone
+    azure.azcollection.azure_rm_privatednszone:
+      resource_group: PedroTactile
+      name: pedro.com
+
+  - name: Create zone group for private endpoint
+    azure.azcollection.azure_rm_privateendpointdnszonegroup:
+      name: mypedrogroup
+      private_endpoint: pedroendpoint
+      resource_group: PedroTactile
+      private_dns_zone_configs:
+        - name: pedro.com
+          private_dns_zone: privatelink.mysql.database.azure.com
+

@@ -8,10 +8,10 @@
       name: pedrostorage
       show_connection_string: yes
     register: Pedrostorage
-  - name: task debug
-    debug:
-      # msg: "{{ Pedrostorage }}"
-      msg: "{{ Pedrostorage.storageaccounts[0].primary_endpoints.key }}"
+  # - name: task debug
+    # debug:
+    #    msg: "{{ Pedrostorage }}"
+    #   msg: "{{ Pedrostorage.storageaccounts[0].primary_endpoints.key }}"
   - name: Create sample container group
     azure_rm_containerinstance:
       resource_group: PedroTactile
