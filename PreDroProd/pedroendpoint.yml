@@ -37,7 +37,14 @@
     azure.azcollection.azure_rm_privatednszone:
       resource_group: PedroTactile
       name: pedro.com
-
+  - name: get dns zone id
+    azure.azcollection.azure_rm_privatednszone_info:
+      resource_group: PedroTactile
+      name: pedro.com
+    register: dnsid
+  - name: debug dnsid
+    set_fact:
+      dnsid: "{{ dnsid.privatednszones[0].id }}"
   - name: Create zone group for private endpoint
     azure.azcollection.azure_rm_privateendpointdnszonegroup:
       name: mypedrogroup
@@ -46,4 +53,5 @@
       private_dns_zone_configs:
         - name: pedro.com
           private_dns_zone: privatelink.mysql.database.azure.com
+          private_dns_zone_id: "{{ dnsid }}"
 
