@@ -1,0 +1,8 @@
+resourceGroupName="testPedroTactile"
+storageAccountName="testpedrostorage"
+fileShareName="testpedroshare"
+
+mntRoot="/mount"
+mntPath="$mntRoot/$storageAccountName/$fileShareName"
+
+sudo mkdir -p $mntPath

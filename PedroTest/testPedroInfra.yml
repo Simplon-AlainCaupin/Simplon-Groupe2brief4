@@ -1,0 +1,52 @@
+- name: Création infra basique
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Création du resource group PedroTactileⒸ
+    azure_rm_resourcegroup:
+      name: testPedroTactile
+      location: francecentral
+
+  - name: Création du VNet
+    azure.azcollection.azure_rm_virtualnetwork:
+      resource_group: testPedroTactile
+      name: testvirtualPedroNetwork
+      address_prefixes: "10.11.0.0/16"
+
+  - name: Ajout du subnet Bastion
+    azure.azcollection.azure_rm_subnet:
+      resource_group: testPedroTactile
+      name: testsubnetPedro
+      address_prefix: "10.11.0.0/24"
+      virtual_network: testvirtualPedroNetwork
+
+  - name: Création ip publique vm PedroBastion
+    azure.azcollection.azure_rm_publicipaddress:
+      resource_group: testPedroTactile
+      allocation_method: Static
+      name: testIPdroBastion
+    register: output_ip_address_bastion    
+  - name: récupération ip bastion
+    debug:
+      msg: "L'ip publique bastion est : {{ output_ip_address_bastion.state.ip_address }}."
+  
+  - name: Création nsg autorisant ssh
+    azure_rm_securitygroup:
+      resource_group: testPedroTactile
+      name: testPedroBastionNSG
+      rules:
+      - name: SSH
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 101
+        direction: Inbound
+
+  - name: Création NIC pour vm PedroBastion
+    azure_rm_networkinterface:
+      resource_group: testPedroTactile
+      name: testPedroBastionNIC
+      virtual_network: testvirtualPedroNetwork
+      subnet: testsubnetPedro
+      public_ip_name: testIPdroBastion
+      security_group: testPedroBastionNSG
