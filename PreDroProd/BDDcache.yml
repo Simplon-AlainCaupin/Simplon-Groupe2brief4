@@ -2,14 +2,7 @@
   hosts: localhost
   connection: local
   tasks:
-  - name: Get specific Container Instance facts
-    azure_rm_containerinstance_info:
-      resource_group: PedroTactile
-      name: pedropanel
-    register: PedroPanel
-  # - name: debug Container instance
-    # debug:
-    #   msg: "{{ PedroPanel.containerinstances[0].ip_address }}"  
+  
   - name: Create MySQL Server
     azure_rm_mysqlserver:
       resource_group: PedroTactile

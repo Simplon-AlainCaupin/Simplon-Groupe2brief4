@@ -71,6 +71,18 @@
         priority: 101
         direction: Inbound
 
+  - name: Création nsg autorisant ssh
+    azure_rm_securitygroup:
+      resource_group: PedroTactile
+      name: PedroPanelNSG
+      rules:
+      - name: TCP
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 101
+        direction: Inbound
+
   - name: Création NIC pour vm PedroBastion
     azure_rm_networkinterface:
       resource_group: PedroTactile
@@ -79,3 +91,12 @@
       subnet: subnetPedro
       public_ip_name: IPdroBastion
       security_group: PedroBastionNSG
+
+  - name: Création NIC pour vm PedroPanel
+    azure_rm_networkinterface:
+      resource_group: PedroTactile
+      name: PedroPanelNIC
+      virtual_network: virtualPedroNetwork
+      subnet: subnetPedro
+      # public_ip_name: IPdroPanel
+      security_group: PedroPanelNSG

@@ -5,15 +5,13 @@
   - name: Create an account with kind of FileStorage
     azure_rm_storageaccount:
       resource_group: PedroTactile
-      name: PedroStorage
-      type: Premium_LRS
-      kind: storage
-  
+      name: pedrostorage
+      type: Standard_LRS
+      kind: Storage
   - name: Create storage share
-    azure_rm_storageshare:
-      name: pedroShare
+    azure.azcollection.azure_rm_storageshare:
+      name: pedroshare
       resource_group: PedroTactile
-      account_name: PedroStorage
+      account_name: pedrostorage
       state: present
       quota: 5120
-    
