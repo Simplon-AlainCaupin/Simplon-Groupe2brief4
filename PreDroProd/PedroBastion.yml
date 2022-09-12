@@ -7,7 +7,7 @@
     azure_rm_virtualmachine:
       resource_group: PedroTactile
       name: PedroBastion
-      vm_size: Standard_B1ls
+      vm_size: Standard_B2s
       admin_username: pedro
       ssh_password_enabled: false
       network_interface_names: PedroBastionNIC

@@ -9,7 +9,7 @@ users:
 
   - default
 
-  - name: pedroAdmin
+  - name: pedroadmin
     gecos: Pedro
     primary_group: pedro
     groups: sudo, users, admin, admingroup

@@ -26,7 +26,7 @@ write_files:
   - path: /data/mountscript
     permissions: "0777"
     content: |
-      sudo mount -t cifs {{https://testpedrostorage.file.core.windows.net}} //mnt/test/ -o username=testpedrostorage,password=Z/Fu9BPBH5dCWSNv3kzgDPcKF2JluTgyvjrfX4mmD5bUyLibzJVIRd1Zqqt2xeTAXcy57SGkxbs4+AStd5zorg==,serverino,nosharesock,actimeo=30
+squalala
 
   - path: /data/pterodactyl.conf
     content: |
@@ -41,7 +41,7 @@ write_files:
       LOG_CHANNEL=daily
       APP_LOCALE=en
 
-      DB_HOST=mypedrosqlserv.mysql.database.azure.com
+      DB_HOST=mypedrosqlserv.privatelink.mysql.database.azure.com
       DB_PORT=3306
       DB_DATABASE=pterodactyl
       DB_USERNAME=pterodactyl
@@ -71,9 +71,12 @@ write_files:
 
 runcmd:
   #!/bin/bash
-  - mkdir /mnt/test
-  - mkdir /home/pedroa/toto
-  - chown pedroa:pedroa /data/mountscript /data/pterodactyl.conf
-  - sudo /data/mountscript
+  # - [ sudo su - pedroa ]
+  - [ sudo apt update ]
+  - [ sudo apt install cifs-utils ]
+  - [ mkdir /mnt/pedro ]
+  # - mkdir /home/pedroa/toto
+  - [ sudo chown pedroa:pedroa /data/mountscript /data/pterodactyl.conf ]
+  - [ sudo /data/mountscript ]
   # - run script
-  # - mv ptero.conf /mnt/moncul
+  - [ sudo mv /data/pterodactyl.conf /mnt/pedro ]
