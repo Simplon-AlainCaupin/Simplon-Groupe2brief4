@@ -12,7 +12,7 @@
     debug:
       msg: "{{ subnetaginfo.subnets[0].id }}"  
 
-  - name: Get specific Container Instance facts
+  - name: Get specific VM panel facts
     azure_rm_containerinstance_info:
       resource_group: PedroTactile
       name: pedropanel
@@ -54,7 +54,7 @@
           name: sample_http_listener
       request_routing_rules:
         - rule_type: Basic
-          backend_address_pool: test_backend_address_pool
+          backend_address_pool: backend_pool_pedrocontainer
           backend_http_settings: sample_appgateway_http_settings
           http_listener: sample_http_listener
           name: rule1
