@@ -3,6 +3,58 @@
   connection: local
   tasks:
 
+  - name: Create an account with kind of FileStorage
+    azure_rm_storageaccount:
+      resource_group: testPedroTactile
+      name: testpedrostorage
+      type: Standard_LRS
+      kind: Storage
+    register: debugSto
+
+  - name: Create storage share
+    azure.azcollection.azure_rm_storageshare:
+      name: testpedroshare
+      resource_group: testPedroTactile
+      account_name: testpedrostorage
+      state: present
+      quota: 5120
+
+  - name: Get facts for all accounts in a resource group
+    azure_rm_storageaccount_info:
+      resource_group: testPedroTactile
+      name: testpedrostorage
+      show_connection_string: yes
+    register: debugStoAcc
+
+  - name: debug du storageaccount
+    debug:
+      msg: "{{debugSto}}"
+  
+  - name: debug account name
+    debug:
+      msg: "{{debugSto.state.name}}"
+    register: nameVar
+
+  - name: debug du storage acc info
+    debug:
+      msg: "{{debugStoAcc}}"
+
+  - name: task debug
+    debug:
+      msg: "{{ debugStoAcc.storageaccounts[0].primary_endpoints.key }}"
+    register: keyVar
+
+  - name: debug du debug
+    debug:
+      msg: "{{keyVar.msg}}"
+
+  - name: replace line
+    lineinfile: 
+      path: ./testinitBastion
+      regexp: 'squalala'
+      line: "      sudo mount -t cifs https://testpedrostorage.file.core.windows.net //mnt/pedro/ -o username={{nameVar.msg}},password={{keyVar.msg}},serverino,nosharesock,actimeo=30"
+      backrefs: yes
+      
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: testPedroTactile

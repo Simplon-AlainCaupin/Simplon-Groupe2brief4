@@ -17,7 +17,14 @@
     azure.azcollection.azure_rm_subnet:
       resource_group: PedroTactile
       name: subnetPedro
-      address_prefix: "10.10.0.0/29"
+      address_prefix: "10.10.0.0/24"
+      virtual_network: virtualPedroNetwork
+  
+  - name: Ajout du subnet Bastion
+    azure.azcollection.azure_rm_subnet:
+      resource_group: PedroTactile
+      name: subnetag
+      address_prefix: "10.10.1.0/24"
       virtual_network: virtualPedroNetwork
 
   - name: Création ip publique vm PedroBastion
@@ -30,7 +37,7 @@
     debug:
       msg: "L'ip publique bastion est : {{ output_ip_address_bastion.state.ip_address }}."
   
-  - name: Création ip publique loadbalancer
+  - name: Création ip publique du lb
     azure.azcollection.azure_rm_publicipaddress:
       resource_group: PedroTactile
       allocation_method: Static
@@ -39,6 +46,16 @@
   - name: récupération ip lb
     debug:
       msg: "L'ip publique du lb est : {{ output_ip_address_lb.state.ip_address }}"
+
+  - name: Création ip publique du panel
+    azure.azcollection.azure_rm_publicipaddress:
+      resource_group: PedroTactile
+      allocation_method: Static
+      name: IPdroPanel
+    register: output_ip_address_panel
+  - name: récupération ip panel
+    debug:
+      msg: "L'ip publique du panel est : {{ output_ip_address_lb.state.ip_address }}"
 
   # - name: Création ip publique conteneur
 
