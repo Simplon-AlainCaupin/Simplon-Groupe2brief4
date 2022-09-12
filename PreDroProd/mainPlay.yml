@@ -4,8 +4,8 @@
   # - ansible.builtin.debug:
   #   msg: Début du playbook
 
-# - name: Playbook infra PedroTactileⒸ
-#   ansible.builtin.import_playbook: PedroInfra.yml
+- name: Playbook infra PedroTactileⒸ
+  ansible.builtin.import_playbook: PedroInfra.yml
 
 # - name: Déploiement BDD Azure MySQL
 #   ansible.builtin.import_playbook: BDDcache.yml
@@ -16,10 +16,10 @@
 # - name: Déploiement primary_endpoints
 #   ansible.builtin.import_playbook: pedroendpoint.yml
 
-- name: Déploiement Panel
-  ansible.builtin.import_playbook: PedroPanel.yml
+# - name: Déploiement Panel
+#   ansible.builtin.import_playbook: PedroPanel.yml
 
-- name: Déploiement application gateway
-  ansible.builtin.import_playbook: appedrogatway.yml
+# - name: Déploiement application gateway
+#   ansible.builtin.import_playbook: appedrogatway.yml
 
 # - name: Déploiement load balancer

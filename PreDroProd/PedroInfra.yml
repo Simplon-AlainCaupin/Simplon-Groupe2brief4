@@ -57,6 +57,16 @@
     debug:
       msg: "L'ip publique du panel est : {{ output_ip_address_lb.state.ip_address }}"
 
+  - name: Création ip publique Panel
+    azure.azcollection.azure_rm_publicipaddress:
+      resource_group: PedroTactile
+      allocation_method: Static
+      name: IPdroPanel
+    register: output_ip_address_panel
+  - name: récupération ip panel
+    debug:
+      msg: "L'ip publique du panel est : {{ output_ip_address_panel.state.ip_address }}"
+
   # - name: Création ip publique conteneur
 
   - name: Création nsg autorisant ssh
