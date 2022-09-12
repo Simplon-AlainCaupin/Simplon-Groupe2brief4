@@ -2,11 +2,7 @@
   hosts: localhost
   connection: local
   tasks:
-<<<<<<< HEAD
   
-=======
-
->>>>>>> a36f79fd030bf9edec62b7a7e9c3d67ea2adbb5e
   - name: Create MySQL Server
     azure_rm_mysqlserver:
       resource_group: PedroTactile
