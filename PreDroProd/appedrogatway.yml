@@ -17,9 +17,10 @@
       resource_group: PedroTactile
       name: pedropanel
     register: PedroPanel
-  # - name: debug Container instance
-    # debug:
-    #   msg: "{{ PedroPanel.containerinstances[0].ip_address }}"
+    
+  - name: debug Container instance
+    debug:
+      msg: "{{ PedroPanel.networkinterfaces.ip_configurations.private_ip_address }}"
   
   - name: Create instance of Application Gateway
     azure_rm_appgateway:
