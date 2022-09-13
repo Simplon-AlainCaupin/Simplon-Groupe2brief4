@@ -23,6 +23,16 @@ users:
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbT2BfdtRDusIaZnoEtZu+6pFWMej18sX/QnYNmGqlUYPKpHsFI5ynItoUgoJcW6kNikUWJ1tJWy5zj3BMszYLBWWVA8VeTJc6Yaj94X1R9Laabzjh45vfdvJgqgnk6lQeXhhyoGZImCKnBLZp7/WIkidJ+Cn4FX++a30WmgdA1wMYLAtLWPkQFlZdmF5EfbfMbSl12ot2fZdmHsF+m4ot1d27VyZqr4N7lcL5GGUOmJuofeL0hqZnf4pbtcHyzusnxO+XYJHBsy5SHC7DvRO7TvUzE/5mBFUAi3KUgClRObYKPrY+n2TOtjufYzWBxrKYF9+04WDDuHbH/J630EK9 alain@alain-VirtualBoxalain@alain
 
+       - default
+  - name: gabriel
+    groups: sudo, root
+    shell: /bin/bash
+    plain_text_passwd: bla123!
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys: 
+        - >-
+          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXyIriiv0HbFfF2yfSdjfQjXfJDyPZX3WzpI/AEdGVHWXJTMoYurHvzlHOr8YA3XBwlTw20bce444HkFD+1RV38RmIHVgpaAs0+KY5ralkl3lmtxm9mfYu6ttiDC8ExDqkoo0JB4U/GH7okJR5D0oJWDWqgkY8JOQlNvpiurncCPLMtVAfSBD/vieQZiiRBLMayA5z8pawdLvIcs56h11IMRxmaKIwAP1mRTcMi4glmZ42FBQzxS41xCZOy1NodmMxV9cx8wqTA63I1/MAoF2w8dwh7bAFUPiYjjwjv5mWFA++iugJMGUqR3vku+hz4Lh6LxMZAx6bqkB0Gw542hcMArezkKPPJlcKzJFoggt8Qh6iATnqO9Yvx3wXrq3aAobg8wlO0f36xh/FqnBQkG70w7/dw9sCPrm03P7cmwhhEPUI0V6HG0rPkJjhTIAgOW/h5DAxgWF0rBbHkg0OzDt2UYqoDQc4PKHf/xRGZNfbpUlKZLRzNDihQe5vKshPXY8= gabriel@gabriel-ThinkPad-T470s
+
   - path: /opt/pterodactyl-panel/pterodactyl.conf
     content: |
       APP_ENV=production
