@@ -23,7 +23,7 @@ users:
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbT2BfdtRDusIaZnoEtZu+6pFWMej18sX/QnYNmGqlUYPKpHsFI5ynItoUgoJcW6kNikUWJ1tJWy5zj3BMszYLBWWVA8VeTJc6Yaj94X1R9Laabzjh45vfdvJgqgnk6lQeXhhyoGZImCKnBLZp7/WIkidJ+Cn4FX++a30WmgdA1wMYLAtLWPkQFlZdmF5EfbfMbSl12ot2fZdmHsF+m4ot1d27VyZqr4N7lcL5GGUOmJuofeL0hqZnf4pbtcHyzusnxO+XYJHBsy5SHC7DvRO7TvUzE/5mBFUAi3KUgClRObYKPrY+n2TOtjufYzWBxrKYF9+04WDDuHbH/J630EK9 alain@alain-VirtualBoxalain@alain
 
-  - path: /data/pterodactyl.conf
+  - path: /opt/pterodactyl-panel/pterodactyl.conf
     content: |
       APP_ENV=production
       APP_DEBUG=false
