@@ -12,14 +12,15 @@
     debug:
       msg: "{{ subnetaginfo.subnets[0].id }}"  
 
-  - name: Get specific VM panel facts
-    azure_rm_containerinstance_info:
+  - name: Get specific Container Instance facts
+    azure_rm_networkinterface_info:
       resource_group: PedroTactile
-      name: pedropanel
+      name: PedroPanelNIC
     register: PedroPanel
-  # - name: debug Container instance
-    # debug:
-    #   msg: "{{ PedroPanel.containerinstances[0].ip_address }}"
+
+  - name: debug Container instance
+    debug:
+      msg: "{{ PedroPanel.networkinterfaces[0].ip_configurations[0].private_ip_address }}"
   
   - name: Create instance of Application Gateway
     azure_rm_appgateway:
@@ -30,18 +31,18 @@
         tier: standard_v2
         capacity: 2
       gateway_ip_configurations:
-        name: gatewayip
-        public_ip_address: IPdroPanel
-      frontend_ip_configurations:
         - subnet:
             id: "{{ subnetaginfo.subnets[0].id }}"
+          name: gatewayip      
+      frontend_ip_configurations:
+        - public_ip_address:  IPdroPanel
           name: sample_gateway_frontend_ip_config
       frontend_ports:
         - port: 80
           name: ag_frontend_pedroport
       backend_address_pools:
         - backend_addresses:
-            - ip_address: "{{ PedroPanel.containerinstances[0].ip_address }}"
+            - ip_address: "{{ PedroPanel.networkinterfaces[0].ip_configurations[0].private_ip_address }}"
           name: backend_pool_pedrocontainer
       backend_http_settings_collection:
         - port: 80
@@ -50,10 +51,10 @@
           name: sample_appgateway_http_settings
       http_listeners:
         - frontend_ip_configuration: sample_gateway_frontend_ip_config
-          frontend_port: ag_frontend_port
+          frontend_port: ag_frontend_pedroport
           name: sample_http_listener
       request_routing_rules:
-        - rule_type: Basic
+        - rule_type: standard
           backend_address_pool: backend_pool_pedrocontainer
           backend_http_settings: sample_appgateway_http_settings
           http_listener: sample_http_listener
