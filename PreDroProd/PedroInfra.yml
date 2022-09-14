@@ -92,6 +92,12 @@
         access: Allow
         priority: 101
         direction: Inbound
+      - name: Http
+        protocol: Tcp
+        destination_port_range: 80
+        access: Allow
+        priority: 105
+        direction: Inbound
 
   - name: Création NIC pour vm PedroBastion
     azure_rm_networkinterface:
